@@ -20,3 +20,22 @@ db.Students.insertMany(
     ]
 )
 ```
+### Find the total marks for each student across all subjects.
+```py
+db.Students.aggregate([{$group:{_id:"$name",total_mark:{$sum:"$marks"}}}])
+```
+
+### Find the maximum marks scored in each subject. 
+```py
+db.Students.aggregate([{$group:{_id:"$subject",max:{$max:"$marks"}}}])
+```
+
+### Find the minimum marks scored by each student. 
+```py
+db.Students.aggregate([{$group:{_id:"$subject",min:{$min:"$marks"}}}])
+```
+
+### Find the top two subjects based on average marks.
+```py
+db.Students.aggregate([{$group:{_id:"$subject",avg:{$avg:"$marks"}}}, {$sort:{"avg":-1}}, {$limit: 2}])
+```
